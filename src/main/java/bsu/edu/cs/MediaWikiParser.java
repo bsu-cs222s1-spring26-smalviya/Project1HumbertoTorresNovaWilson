@@ -1,9 +1,17 @@
 package bsu.edu.cs;
 
+import com.jayway.jsonpath.JsonPath;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class MediaWikiParser {
-    public String parse(InputStream testDataStream) {
-        JsonPath.read(testDataStream, "$... timestamp");
+    public String parse(InputStream testDataStream) throws IOException, JSONException {
+        List<Object> result = JsonPath.read(testDataStream, "$..timestamp");
+        return result.get(0).toString();
     }
 }

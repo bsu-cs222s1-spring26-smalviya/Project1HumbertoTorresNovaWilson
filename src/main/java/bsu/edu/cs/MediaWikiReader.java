@@ -1,5 +1,7 @@
 package bsu.edu.cs;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -11,7 +13,7 @@ import java.util.Scanner;
 
 public class MediaWikiReader {
     //comment
-    public static public static void main(String[] args) {
+    public static void main(String[] args) {
         MediaWikiReader revisionReader = new MediaWikiReader();
         Scanner scanner = new Scanner(System.in);
         String line = scanner.nextLine();
@@ -33,8 +35,13 @@ public class MediaWikiReader {
             connection.setRequestProperty("User-Agent",
                     "MediaWikiReader; HumbertoTorres(humberto.torres@bsu.edu)");
             InputStream inputStream = connection.getInputStream();
+            MediaWikiParser parser = new MediaWikiParser();
+            String timeStamp = parser.parse(inputStream);
+            return timeStamp;
         } catch (MalformedURLException malformedURLException){
             throw new RuntimeException(malformedURLException);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 }
