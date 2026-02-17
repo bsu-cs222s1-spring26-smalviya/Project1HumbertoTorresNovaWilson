@@ -13,18 +13,15 @@ import java.util.Scanner;
 
 public class MediaWikiReader {
 
-    public static void main(String[] args) {
+    public static void runReader(String articleName) {
         MediaWikiReader revisionReader = new MediaWikiReader();
-        Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine();
         try{
-            String timestamp = revisionReader.getLatestRevisionOf(line);
+            String timestamp = revisionReader.getLatestRevisionOf(articleName);
             System.out.println(timestamp);
         } catch (IOException ioException){
             System.err.println("Network connection problem: " + ioException.getMessage());
         }
     }
-
     private String getLatestRevisionOf(String articleTitle) throws IOException {
         String urlString = getURLString(articleTitle);
         try {
@@ -41,7 +38,7 @@ public class MediaWikiReader {
                 "MediaWikiReader; HumbertoTorres(humberto.torres@bsu.edu)");
         try (InputStream inputStream = connection.getInputStream()) {
             MediaWikiParser parser = new MediaWikiParser();
-            return parser.parse(inputStream);
+            return parser.parseForTimeStamp(inputStream, 0);
         }
     }
 

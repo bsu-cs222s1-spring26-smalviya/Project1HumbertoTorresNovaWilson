@@ -14,7 +14,7 @@ public class TestMediaWiki {
     public void testTimeStamp() throws IOException, JSONException {
         MediaWikiParser parser = new MediaWikiParser();
         InputStream testDataStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
-        String timeStamp = parser.parse(testDataStream);
+        String timeStamp = parser.parseForTimeStamp(testDataStream,0);
         Assertions.assertEquals("2025-08-13T22:47:03Z",timeStamp);
     }
     @Test
@@ -31,7 +31,7 @@ public class TestMediaWiki {
     @Test
     public void testGettingURLString(){
         MediaWikiReader reader = new MediaWikiReader();
-        String result = reader.getURLString("Frank Zappa");
+        String result = reader.getURLString("Zappa");
         Assertions.assertEquals("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Zappa&rvprop=timestamp|user&rvlimit=4&redirects", result);
     }
 }

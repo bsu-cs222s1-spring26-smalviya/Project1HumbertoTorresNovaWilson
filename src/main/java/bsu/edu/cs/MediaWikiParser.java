@@ -10,8 +10,8 @@ import java.io.InputStream;
 import java.util.List;
 
 public class MediaWikiParser {
-    public String parse(InputStream testDataStream) throws IOException, JSONException {
+    public String parseForTimeStamp(InputStream testDataStream,int position) throws IOException, JSONException {
         List<Object> result = JsonPath.read(testDataStream, "$..timestamp");
-        return result.get(0).toString();
+        return result.get(position).toString();
     }
 }
