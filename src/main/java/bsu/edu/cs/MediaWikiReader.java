@@ -30,18 +30,22 @@ public class MediaWikiReader {
                 articleTitle);
         String encodedUrlString = URLEncoder.encode(urlString, Charset.defaultCharset());
         try {
-            URL url = new URL(encodedUrlString);
-            URLConnection connection = url.openConnection();
-            connection.setRequestProperty("User-Agent",
-                    "MediaWikiReader; HumbertoTorres(humberto.torres@bsu.edu)");
-            InputStream inputStream = connection.getInputStream();
-            MediaWikiParser parser = new MediaWikiParser();
-            String timeStamp = parser.parse(inputStream);
-            return timeStamp;
+            return getConnection(encodedUrlString);
         } catch (MalformedURLException malformedURLException){
             throw new RuntimeException(malformedURLException);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getConnection(String encodedUrlString) throws IOException, JSONException {
+        URL url = new URL(encodedUrlString);
+        URLConnection connection = url.openConnection();
+        connection.setRequestProperty("User-Agent",
+                "MediaWikiReader; HumbertoTorres(humberto.torres@bsu.edu)");
+        InputStream inputStream = connection.getInputStream();
+        MediaWikiParser parser = new MediaWikiParser();
+        //Should return timeStamp
+        return parser.parse(inputStream);
     }
 }
