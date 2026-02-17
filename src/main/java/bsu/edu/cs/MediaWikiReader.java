@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 import java.util.Scanner;
 
 public class MediaWikiReader {
-    //comment
+
     public static void main(String[] args) {
         MediaWikiReader revisionReader = new MediaWikiReader();
         Scanner scanner = new Scanner(System.in);
@@ -26,7 +26,7 @@ public class MediaWikiReader {
     }
 
     private String getLatestRevisionOf(String articleTitle) throws IOException{
-        String urlString = String.format("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Zappa&rvprop=timestamp|user&rvlimit=4&redirects",
+        String urlString = String.format("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
                 articleTitle);
         String encodedUrlString = URLEncoder.encode(urlString, Charset.defaultCharset());
         try {
