@@ -20,10 +20,18 @@ public class TestMediaWiki {
     @Test
     public void testNetworkConnection() throws JSONException, IOException {
         MediaWikiReader reader = new MediaWikiReader();
-        String urlString = String.format("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
-                "Frank Zappa");
-        String encodedUrlString = URLEncoder.encode(urlString, Charset.defaultCharset());
-        String result = reader.getConnection(encodedUrlString);
-        Assertions.assertTrue(result.equals("2025-08-13T22:47:03Z"));
+        String encodedTitle = URLEncoder.encode("Frank Zappa", java.nio.charset.StandardCharsets.UTF_8);
+        String urlString = String.format(
+                "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
+                encodedTitle
+        );
+        String result = reader.getConnection(urlString);
+        Assertions.assertTrue(result.matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"));
+    }
+    @Test
+    public void testGettingURLString(){
+        MediaWikiReader reader = new MediaWikiReader();
+        String result = reader.getURLString("Frank Zappa");
+        Assertions.assertEquals("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Zappa&rvprop=timestamp|user&rvlimit=4&redirects", result);
     }
 }

@@ -25,27 +25,31 @@ public class MediaWikiReader {
         }
     }
 
-    private String getLatestRevisionOf(String articleTitle) throws IOException{
-        String urlString = String.format("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
-                articleTitle);
-        String encodedUrlString = URLEncoder.encode(urlString, Charset.defaultCharset());
+    private String getLatestRevisionOf(String articleTitle) throws IOException {
+        String urlString = getURLString(articleTitle);
         try {
-            return getConnection(encodedUrlString);
-        } catch (MalformedURLException malformedURLException){
-            throw new RuntimeException(malformedURLException);
+            return getConnection(urlString);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String getConnection(String encodedUrlString) throws IOException, JSONException {
-        URL url = new URL(encodedUrlString);
+    public String getConnection(String urlString) throws IOException, JSONException {
+        URL url = new URL(urlString);
         URLConnection connection = url.openConnection();
         connection.setRequestProperty("User-Agent",
                 "MediaWikiReader; HumbertoTorres(humberto.torres@bsu.edu)");
-        InputStream inputStream = connection.getInputStream();
-        MediaWikiParser parser = new MediaWikiParser();
-        //Should return timeStamp
-        return parser.parse(inputStream);
+        try (InputStream inputStream = connection.getInputStream()) {
+            MediaWikiParser parser = new MediaWikiParser();
+            return parser.parse(inputStream);
+        }
+    }
+
+    public String getURLString(String articleTitle){
+        String encodedTitle = URLEncoder.encode(articleTitle, java.nio.charset.StandardCharsets.UTF_8);
+        String urlString = String.format(
+                "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
+                encodedTitle);
+        return urlString;
     }
 }
