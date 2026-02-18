@@ -14,12 +14,13 @@ import java.time.format.DateTimeFormatter;
 public class MediaWikiParser {
     public String parseForTimeStamp(InputStream testDataStream,int position) throws IOException, JSONException {
         List<Object> result = JsonPath.read(testDataStream, "$..timestamp");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd hh:mm a");
-        Instant instant = Instant.parse(result);
-        ZonedDateTime localTime = instant.atZone(ZoneId.systemDefault());
-        String formattedTime = localTime.format(formatter);
         return result.get(position).toString();
     }
 
-    public String correctTimeFormatter(String s)
+    public String correctTimeFormatter(String time){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd hh:mm a");
+        Instant instant = Instant.parse(time);
+        ZonedDateTime localTime = instant.atZone(ZoneId.systemDefault());
+        return localTime.format(formatter);
+    }
 }
