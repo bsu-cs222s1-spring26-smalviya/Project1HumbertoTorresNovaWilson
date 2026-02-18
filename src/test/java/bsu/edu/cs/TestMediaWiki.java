@@ -34,4 +34,11 @@ public class TestMediaWiki {
         String result = reader.getURLString("Zappa");
         Assertions.assertEquals("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Zappa&rvprop=timestamp|user&rvlimit=4&redirects", result);
     }
+
+    public void testTimeConverter(){
+        MediaWikiParser parser = new MediaWikiParser();
+        //We are passing through the time for the wikipedia article for Ernsanchez00
+        String result = parser.correctTimeFormatter("2025-08-13T22:47:03Z");
+        Assertions.assertEquals("2025 08 13 22:47 03", result);
+    }
 }
