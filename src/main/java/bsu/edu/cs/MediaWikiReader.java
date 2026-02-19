@@ -15,14 +15,15 @@ import java.util.Scanner;
 
 public class MediaWikiReader {
 
-    private static MediaWikiParser parser = new MediaWikiParser();
-
+//    private static MediaWikiParser parser = new MediaWikiParser();
     public static String runReader(String articleName) {
         MediaWikiReader revisionReader = new MediaWikiReader();
         try{
             String jsonSite = revisionReader.getConnection(articleName);
-            List<Object> timeStamps = parser.parseForTimeStamp(jsonSite);
-            List<Object> usernames = parser.parseForUsernames(jsonSite);
+            return jsonSite;
+//            List<Object> timeStamps = parser.parseForTimeStamp(jsonSite);
+//            List<Object> usernames = parser.parseForUsernames(jsonSite);
+
 
         } catch (IOException ioException){
             System.err.println("Network connection problem: " + ioException.getMessage());
