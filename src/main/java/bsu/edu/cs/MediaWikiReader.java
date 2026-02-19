@@ -26,15 +26,6 @@ public class MediaWikiReader {
         }
     }
 
-    private String getLatestRevisionOf(String articleTitle) throws IOException {
-        String urlString = getURLString(articleTitle);
-        try {
-            return getConnection(urlString);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public String getConnection(String urlString) throws IOException, JSONException {
         URL url = new URL(urlString);
         URLConnection connection = url.openConnection();
@@ -52,4 +43,15 @@ public class MediaWikiReader {
                 encodedTitle);
         return urlString;
     }
+
+    private String getLatestRevisionOf(String articleTitle) throws IOException {
+        String urlString = getURLString(articleTitle);
+        try {
+            return getConnection(urlString);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

@@ -14,7 +14,8 @@ public class TestMediaWiki {
     @Test
     public void testTimeStamp() throws IOException, JSONException {
         MediaWikiParser parser = new MediaWikiParser();
-        InputStream testDataStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        InputStream jsonStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        String testDataStream= new String(jsonStream.readAllBytes(), StandardCharsets.UTF_8);
         String timeStamp = parser.parseForTimeStamp(testDataStream,0);
         Assertions.assertEquals("2026-02-18T18:44:39Z",timeStamp);
     }
@@ -43,5 +44,12 @@ public class TestMediaWiki {
         //We are passing through the time for the wikipedia article for Ernsanchez00
         String result = parser.correctTimeFormatter("2025-08-13T22:47:03Z");
         Assertions.assertEquals("2025 08 13 06:47 PM", result);
+    }
+    @Test
+    public void testNumberOfRevisions() throws IOException {
+        MediaWikiParser parser = new MediaWikiParser();
+        InputStream json = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        String testCase= new String(json.readAllBytes(), StandardCharsets.UTF_8);
+        Assertions.assertEquals(4,parser.getNumberOfRevisions(testCase));
     }
 }
