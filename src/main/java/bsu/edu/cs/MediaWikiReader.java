@@ -10,23 +10,30 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Scanner;
 
 public class MediaWikiReader {
 
     private static MediaWikiParser parser = new MediaWikiParser();
 
-    public static void runReader(String articleName) {
+    public static String runReader(String articleName) {
         MediaWikiReader revisionReader = new MediaWikiReader();
         try{
-            String timestamp = revisionReader.getLatestRevisionOf(articleName);
-            System.out.println(parser.correctTimeFormatter(timestamp));
+            String jsonSite = revisionReader.getConnection(articleName);
+            List<Object> timeStamps = parser.parseForTimeStamp(jsonSite);
+            List<Object> usernames = parser.parseForUsernames(jsonSite);
+
         } catch (IOException ioException){
             System.err.println("Network connection problem: " + ioException.getMessage());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
+        return null;
     }
 
-    public String getConnection(String urlString) throws IOException, JSONException {
+    public String getConnection(String articleTitle) throws IOException, JSONException {
+        String urlString = getURLString(articleTitle);
         URL url = new URL(urlString);
         URLConnection connection = url.openConnection();
         connection.setRequestProperty("User-Agent",

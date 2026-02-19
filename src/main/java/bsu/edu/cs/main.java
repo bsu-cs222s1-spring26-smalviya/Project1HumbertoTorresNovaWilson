@@ -15,7 +15,7 @@ public class main{
             if (response.equals("q")) {
                 running = false;
             } else {
-                MediaWikiReader.runReader(response);
+                String formattedRevisions = MediaWikiReader.runReader(response);
             }
         }
     }

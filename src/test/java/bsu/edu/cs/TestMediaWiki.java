@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class TestMediaWiki {
     @Test
@@ -16,20 +17,20 @@ public class TestMediaWiki {
         MediaWikiParser parser = new MediaWikiParser();
         InputStream jsonStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
         String testDataStream= new String(jsonStream.readAllBytes(), StandardCharsets.UTF_8);
-        String timeStamp = parser.parseForTimeStamp(testDataStream,0);
-        Assertions.assertEquals("2026-02-18T18:44:39Z",timeStamp);
+        List<Object> timeStamp = parser.parseForTimeStamp(testDataStream);
+        Assertions.assertEquals("2026-02-18T18:44:39Z",timeStamp.get(0).toString());
     }
     @Test
     public void testNetworkConnection() throws JSONException, IOException {
         MediaWikiReader reader = new MediaWikiReader();
-        String encodedTitle = URLEncoder.encode("Zappa", java.nio.charset.StandardCharsets.UTF_8);
-        String urlString = String.format(
-                "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
-                encodedTitle
-        );
+//        String encodedTitle = URLEncoder.encode("Zappa", java.nio.charset.StandardCharsets.UTF_8);
+//        String urlString = String.format(
+//                "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
+//                encodedTitle
+//        );
         InputStream json = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
         String expectedResult= new String(json.readAllBytes(), StandardCharsets.UTF_8);
-        String result = reader.getConnection(urlString);
+        String result = reader.getConnection("Zappa");
         Assertions.assertEquals(expectedResult.trim(),result.trim());
     }
     @Test
@@ -39,17 +40,35 @@ public class TestMediaWiki {
         Assertions.assertEquals("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Zappa&rvprop=timestamp|user&rvlimit=4&redirects", result);
     }
     @Test
-    public void testTimeConverter(){
+    public void testUsernames() throws IOException {
         MediaWikiParser parser = new MediaWikiParser();
-        //We are passing through the time for the wikipedia article for Ernsanchez00
-        String result = parser.correctTimeFormatter("2025-08-13T22:47:03Z");
-        Assertions.assertEquals("2025 08 13 06:47 PM", result);
+        InputStream jsonStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        String testDataStream= new String(jsonStream.readAllBytes(), StandardCharsets.UTF_8);
+        List<Object> userNames = parser.parseForUsernames(testDataStream);
+        Assertions.assertEquals("UndergroundMan3000", userNames.get(0).toString());
+
     }
+
     @Test
-    public void testNumberOfRevisions() throws IOException {
+    public void testCheckRedirections() throws IOException {
         MediaWikiParser parser = new MediaWikiParser();
-        InputStream json = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
-        String testCase= new String(json.readAllBytes(), StandardCharsets.UTF_8);
-        Assertions.assertEquals(4,parser.getNumberOfRevisions(testCase));
+        InputStream jsonStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        String testDataStream= new String(jsonStream.readAllBytes(), StandardCharsets.UTF_8);
+        Assertions.assertTrue(parser.checkRedirections(testDataStream));
     }
+
+    @Test
+    public void testGetRedirection() throws IOException {
+        MediaWikiParser parser = new MediaWikiParser();
+        InputStream jsonStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        String testDataStream= new String(jsonStream.readAllBytes(), StandardCharsets.UTF_8);
+        Assertions.assertEquals("Redirected to Frank Zappa",parser.getRedirection(testDataStream));
+    }
+//    @Test
+//    public void testTimeConverter(){
+//        MediaWikiParser parser = new MediaWikiParser();
+//        //We are passing through the time for the wikipedia article for Ernsanchez00
+//        String result = parser.correctTimeFormatter("2025-08-13T22:47:03Z");
+//        Assertions.assertEquals("2025 08 13 06:47 PM", result);
+//    }
 }
