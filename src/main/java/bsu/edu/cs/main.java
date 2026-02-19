@@ -13,6 +13,11 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+
+//START GUI
+//____________________________________________________________________________________________________
+
+
 public class main extends Application{
     public static void main(String[] args){ launch(args);}
     private final Button getRevisionsButton = new Button("Get Latest Revisions");
@@ -62,6 +67,16 @@ public class main extends Application{
             outputField.setText(FormattedRevisions);
         }
     }
+
+
+//____________________________________________________________________________________________________
+//END GUI
+
+
+//START CLI
+//____________________________________________________________________________________________________
+
+
 //    public static Scanner scanner = new Scanner(System.in);
 //    public static void main(String[] args) throws IOException, JSONException {
 //        boolean running = true;
@@ -79,4 +94,9 @@ public class main extends Application{
 //            }
 //        }
 //    }
+
+
+//____________________________________________________________________________________________________
+//END CLI
+
 }
