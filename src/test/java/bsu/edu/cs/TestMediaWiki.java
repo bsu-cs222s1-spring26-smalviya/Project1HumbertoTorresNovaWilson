@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class TestMediaWiki {
     @Test
@@ -15,18 +16,20 @@ public class TestMediaWiki {
         MediaWikiParser parser = new MediaWikiParser();
         InputStream testDataStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
         String timeStamp = parser.parseForTimeStamp(testDataStream,0);
-        Assertions.assertEquals("2025-08-13T22:47:03Z",timeStamp);
+        Assertions.assertEquals("2026-02-18T18:44:39Z",timeStamp);
     }
     @Test
     public void testNetworkConnection() throws JSONException, IOException {
         MediaWikiReader reader = new MediaWikiReader();
-        String encodedTitle = URLEncoder.encode("Frank Zappa", java.nio.charset.StandardCharsets.UTF_8);
+        String encodedTitle = URLEncoder.encode("Zappa", java.nio.charset.StandardCharsets.UTF_8);
         String urlString = String.format(
                 "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
                 encodedTitle
         );
+        InputStream json = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
+        String expectedResult= new String(json.readAllBytes(), StandardCharsets.UTF_8);
         String result = reader.getConnection(urlString);
-        Assertions.assertTrue(result.matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"));
+        Assertions.assertEquals(expectedResult.trim(),result.trim());
     }
     @Test
     public void testGettingURLString(){

@@ -9,19 +9,23 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class MediaWikiReader {
+
+    private static MediaWikiParser parser = new MediaWikiParser();
 
     public static void runReader(String articleName) {
         MediaWikiReader revisionReader = new MediaWikiReader();
         try{
             String timestamp = revisionReader.getLatestRevisionOf(articleName);
-            System.out.println(timestamp);
+            System.out.println(parser.correctTimeFormatter(timestamp));
         } catch (IOException ioException){
             System.err.println("Network connection problem: " + ioException.getMessage());
         }
     }
+
     private String getLatestRevisionOf(String articleTitle) throws IOException {
         String urlString = getURLString(articleTitle);
         try {
@@ -37,8 +41,7 @@ public class MediaWikiReader {
         connection.setRequestProperty("User-Agent",
                 "MediaWikiReader; HumbertoTorres(humberto.torres@bsu.edu)");
         try (InputStream inputStream = connection.getInputStream()) {
-            MediaWikiParser parser = new MediaWikiParser();
-            return parser.parseForTimeStamp(inputStream, 0);
+            return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         }
     }
 
