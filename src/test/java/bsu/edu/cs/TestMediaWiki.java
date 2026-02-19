@@ -64,6 +64,7 @@ public class TestMediaWiki {
         String testDataStream= new String(jsonStream.readAllBytes(), StandardCharsets.UTF_8);
         Assertions.assertEquals("Redirected to Frank Zappa",parser.getRedirection(testDataStream));
     }
+
 //    @Test
 //    public void testTimeConverter(){
 //        MediaWikiParser parser = new MediaWikiParser();

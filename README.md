@@ -3,12 +3,14 @@ Project done by: Humberto Torres
 ReadMe.md done by: Humberto Torres
 
 List of things that need to be completed:
-Report no page found on GUI -
-ReportNetwork error on GUI -        THESE THREE JUST NEED A SIMPLE STRING RETURN
-Report no page requested on GUI -
+* Report no page found on GUI -
+* ReportNetwork error on GUI -        THESE THREE JUST NEED A SIMPLE STRING RETURN
+* Report no page requested on GUI -
 
-Redundant code in comments need to be deleted
-Comments on sections of code need to be established for other users to understand more
+* Change Formatting of displaying the lists
+* Make it so the GUI and CLI is accessible without changing the code.
+* Redundant code in comments need to be deleted
+* Comments on sections of code need to be established for other users to understand more
 
 BUILD: Java FX V.22 & JDL 24.0.2 ; ALL INFORMATION IN build.gradle.kts
 RUN INSTRUCTIONS:
