@@ -37,7 +37,7 @@ public class TestMediaWiki {
     public void testGettingURLString(){
         MediaWikiReader reader = new MediaWikiReader();
         String result = reader.getURLString("Zappa");
-        Assertions.assertEquals("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Zappa&rvprop=timestamp|user&rvlimit=4&redirects", result);
+        Assertions.assertEquals("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=Zappa&rvprop=timestamp|user&rvlimit=15&redirects", result);
     }
     @Test
     public void testUsernames() throws IOException {

@@ -47,7 +47,7 @@ public class MediaWikiReader {
     public String getURLString(String articleTitle){
         String encodedTitle = URLEncoder.encode(articleTitle, java.nio.charset.StandardCharsets.UTF_8);
         String urlString = String.format(
-                "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
+                "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=15&redirects",
                 encodedTitle);
         return urlString;
     }
