@@ -23,8 +23,6 @@ public class MediaWikiReader {
             return jsonSite;
 //            List<Object> timeStamps = parser.parseForTimeStamp(jsonSite);
 //            List<Object> usernames = parser.parseForUsernames(jsonSite);
-
-
         } catch (IOException ioException){
             System.err.println("Network connection problem: " + ioException.getMessage());
         } catch (JSONException e) {
