@@ -23,7 +23,7 @@ public class RevisionFormatter {
         List<Object> usernames = parser.parseForUsernames(JsonString);
 
         for(int pivot = 0; pivot < timeStamps.size() && pivot < 15; pivot++){
-            formattedString = formattedString.concat("Username: "+usernames.get(pivot).toString()+".\n");
+            formattedString = formattedString.concat((pivot+1) + ". Username: "+usernames.get(pivot).toString()+"; ");
             formattedString = formattedString.concat("Time edited: "+ correctTimeFormatter(timeStamps.get(pivot).toString())+".\n\n");
         }
         return formattedString;

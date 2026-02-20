@@ -8,7 +8,6 @@ List of things that need to be completed:
 * Report no page requested on GUI -
 
 * make a pop-up for error screens
-* Change Formatting of displaying the lists
 * Make it so the GUI and CLI is accessible without changing the code.
 * Redundant code in comments need to be deleted
 * Comments on sections of code need to be established for other users to understand more
