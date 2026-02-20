@@ -12,6 +12,7 @@ import java.util.List;
 public class RevisionFormatter {
     private static MediaWikiParser parser = new MediaWikiParser();
 
+    //Formats the Json to a long string of the list of revisions in a readable format
     public static String formatRevisions(String JsonString) throws IOException, JSONException {
         String formattedString = new String();
         if(parser.checkRedirections(JsonString)){
@@ -28,6 +29,8 @@ public class RevisionFormatter {
         }
         return formattedString;
     }
+
+    //Converts the time given in the json file to a readable format
     public static String correctTimeFormatter(String time){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd hh:mm a");
         Instant instant = Instant.parse(time);

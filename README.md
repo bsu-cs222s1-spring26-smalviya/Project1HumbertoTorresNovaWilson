@@ -7,10 +7,6 @@ List of things that need to be completed:
 * ReportNetwork error on GUI -        THESE THREE JUST NEED A SIMPLE STRING RETURN
 * Report no page requested on GUI -
 
-* make a pop-up for error screens
-* Redundant code in comments need to be deleted
-* Comments on sections of code need to be established for other users to understand more
-
 BUILD: Java FX V.22 & JDL 24.0.2 ; ALL INFORMATION IN build.gradle.kts
 RUN INSTRUCTIONS:
 The GUI should already be ready for you to run, you can run using Gradle -> Appolications -> RUN

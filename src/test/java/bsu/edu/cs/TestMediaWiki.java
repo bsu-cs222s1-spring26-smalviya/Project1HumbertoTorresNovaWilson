@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -23,11 +21,6 @@ public class TestMediaWiki {
     @Test
     public void testNetworkConnection() throws JSONException, IOException {
         MediaWikiReader reader = new MediaWikiReader();
-//        String encodedTitle = URLEncoder.encode("Zappa", java.nio.charset.StandardCharsets.UTF_8);
-//        String urlString = String.format(
-//                "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&titles=%s&rvprop=timestamp|user&rvlimit=4&redirects",
-//                encodedTitle
-//        );
         InputStream json = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json");
         String expectedResult= new String(json.readAllBytes(), StandardCharsets.UTF_8);
         String result = reader.getConnection("Zappa");
@@ -64,12 +57,4 @@ public class TestMediaWiki {
         String testDataStream= new String(jsonStream.readAllBytes(), StandardCharsets.UTF_8);
         Assertions.assertEquals("Redirected to Frank Zappa",parser.getRedirection(testDataStream));
     }
-
-//    @Test
-//    public void testTimeConverter(){
-//        MediaWikiParser parser = new MediaWikiParser();
-//        //We are passing through the time for the wikipedia article for Ernsanchez00
-//        String result = parser.correctTimeFormatter("2025-08-13T22:47:03Z");
-//        Assertions.assertEquals("2025 08 13 06:47 PM", result);
-//    }
 }
