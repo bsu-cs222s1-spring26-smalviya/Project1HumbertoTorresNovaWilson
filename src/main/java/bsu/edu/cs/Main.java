@@ -5,7 +5,6 @@ import javafx.scene.layout.Priority;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -18,19 +17,19 @@ import javafx.scene.layout.VBox;
 //____________________________________________________________________________________________________
 
 
-public class main extends Application{
+public class Main extends Application{
     public static void main(String[] args){ launch(args);}
     private final Button getRevisionsButton = new Button("Get Latest Revisions");
     private final TextField inputField = new TextField();
     private final TextArea outputField = new TextArea();
+    private final Button runConsoleButton = new Button("Run Console Instead");
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) throws JSONException, IOException {
         outputField.setEditable(false);
         outputField.setWrapText(true);
         configure(primaryStage);
         configureGetRevisionsButton();
-
     }
     private void configure(Stage stage){
         stage.setTitle("RevisionFinder");
@@ -45,7 +44,8 @@ public class main extends Application{
                 inputField,
                 getRevisionsButton,
                 new Label("Revisions:"),
-                outputField);
+                outputField,
+                runConsoleButton);
         VBox.setVgrow(outputField, Priority.ALWAYS);
         return root;
     }
@@ -67,36 +67,7 @@ public class main extends Application{
             outputField.setText(FormattedRevisions);
         }
     }
-
-
 //____________________________________________________________________________________________________
 //END GUI
-
-
-//START CLI
-//____________________________________________________________________________________________________
-
-
-//    public static Scanner scanner = new Scanner(System.in);
-//    public static void main(String[] args) throws IOException, JSONException {
-//        boolean running = true;
-//        while(running) {
-//            System.out.println("Enter \"q\" to quit the program at any time.");
-//            System.out.print("\nPlease enter an article title you would like to search for: ");
-//            String response = scanner.nextLine();
-//
-//            if (response.equals("q")) {
-//                running = false;
-//            } else {
-//                String JsonString = MediaWikiReader.runReader(response);
-//                String FormattedRevisions = RevisionFormatter.formatRevisions(JsonString);
-//                System.out.println(FormattedRevisions);
-//            }
-//        }
-//    }
-
-
-//____________________________________________________________________________________________________
-//END CLI
 
 }

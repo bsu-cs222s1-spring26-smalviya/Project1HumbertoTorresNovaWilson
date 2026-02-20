@@ -23,10 +23,11 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
 javafx {
     version = "22"
     modules("javafx.controls", "javafx.fxml")
 }
 application {
-    mainClass.set("bsu.edu.cs.main")
+    mainClass.set("bsu.edu.cs.Main")
 }
